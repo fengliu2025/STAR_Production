@@ -1,3 +1,4 @@
+
 #ifndef __CINT__
 #include "TROOT.h"
 #include "TSystem.h"
@@ -24,43 +25,19 @@ using namespace std;
 class StChain;
 #endif
 
-//StChain *chain;
+StChain *chain;
 
 //triggerSetup = 0 - MB, 1 - JP2
-//void runPicoLambdaAnaMaker3(const int run, const int seg){
-void runPicoLambdaAnaMaker3(){
-  int run =0 ; 
-  int seg = 0 ; 
-  const unsigned int makerMode = 0 /*kAnalyze*/;
-  const Char_t *badRunListFileName = "picoList_bad_MB.list";
-  const Char_t *treeName = "picoHFtree";
-  const Char_t *productionBasePath = "/star/data100/reco/AuAu_200_production_2016/ReversedFullField/P16ij/2016";
-  const unsigned int decayChannel = 0 /* kChannel0 */;
-  string SL_version = "SL20c";
-  const int triggerSetup = 0;
-
-
-  stringstream input;
-  input<<"/star/u/jjiastar/pwg/Spin/production/"<<run<<"/"<<run<<".0"<<seg<<".list";
-
-  stringstream output;
-  output<<"/star/u/jjiastar/pwg/Spin/production/output/"<<run<<"_"<<seg<<".root";
-
-  std::string inputFileStr = input.str();
-  std::string outputFileStr = output.str();
-
-  cout << "inputfile = " << inputFileStr << endl;
-  cout << "outputfile = " << outputFileStr << endl;
-
-  const char *inputFile = inputFileStr.c_str();
-  const char *outputFile = outputFileStr.c_str();
-
-
+void runPicoLambdaAnaMaker(const Char_t *inputFile="test.list", const Char_t *outputFile="outputBaseName",  
+    const unsigned int makerMode = 0 /*kAnalyze*/,
+    const Char_t *badRunListFileName = "picoList_bad_MB.list", const Char_t *treeName = "picoHFtree",
+    const Char_t *productionBasePath = "/star/data100/reco/AuAu_200_production_2016/ReversedFullField/P16ij/2016",
+    const unsigned int decayChannel = 0 /* kChannel0 */, string SL_version = "SL20c",
+    const int triggerSetup = 0)
+{ 
   // -- Check STAR Library. Please set SL_version to the original star library used in the production 
   //    from http://www.star.bnl.gov/devcgi/dbProdOptionRetrv.pl
   //string SL_version = "SL20c"; //also SL21d for Run17 is available with smaller production sample 08/21/2022
-
-  /*
   string env_SL = getenv ("STAR");
   if (env_SL.find(SL_version)==string::npos) {
     cout<<"Environment Star Library does not match the requested library in runPicoHFMyAnaMaker.C. Exiting..."<<endl;
@@ -71,20 +48,9 @@ void runPicoLambdaAnaMaker3(){
   gROOT->LoadMacro("loadSharedHFLibraries.C");
   loadSharedHFLibraries();
 #endif
-  */
 
-  gROOT->LoadMacro("$STAR/StRoot/StMuDSTMaker/COMMON/macros/loadSharedLibraries.C");
-  loadSharedLibraries();
 
-  gSystem->Load("StBTofUtil");
-  gSystem->Load("StPicoEvent");
-  gSystem->Load("StPicoDstMaker");
-  gSystem->Load("StPicoCutsBase");
-  gSystem->Load("StPicoHFMaker");
-  gSystem->Load("StPicoLambdaAnaMaker");
-  cout << " loading of shared HF libraries are done" << endl;
-
-  StChain *chain = new StChain();
+  chain = new StChain();
 
   // ========================================================================================
   //makerMode    = StPicoHFMaker::kAnalyze;
@@ -165,19 +131,24 @@ void runPicoLambdaAnaMaker3(){
   //MB
   if(triggerSetup == 0)
   {
-    //Run24 pp200GeV triggers
-    if(run>25120000){//Run24
-      hfCuts->addTriggerId(910001); //MB-BBC
-      hfCuts->addTriggerId(910003); //MB-EPD
-      hfCuts->addTriggerId(910013); //MB-EPD
-      
-      hfCuts->addTriggerId(910802); //HM-TOF 
-      hfCuts->addTriggerId(910804); //HM-TOF
-    }
-    else{
-      hfCuts->addTriggerId(370001); //VPDMB
-      hfCuts->addTriggerId(370011); //VPDMB-nosmd
-    }
+    //Run12 pp200GeV triggers
+    hfCuts->addTriggerId(370001); //VPDMB
+    hfCuts->addTriggerId(370011); //VPDMB-nosmd
+    
+    
+    //Run15 pp200GeV triggers
+     
+    //st_ssdmb triggers
+    hfCuts->addTriggerId(470011); //VPDMB-5-ssd
+    hfCuts->addTriggerId(470021); //VPDMB-5-ssd
+    hfCuts->addTriggerId(480001); //VPDMB-5-ssd    
+    hfCuts->addTriggerId(490001); //VPDMB-5-ssd
+    hfCuts->addTriggerId(500001); //VPDMB-5-ssd
+    hfCuts->addTriggerId(510009); //VPDMB-5-ssd
+    
+
+    //Run17 pp510GeV triggers
+    hfCuts->addTriggerId(570001);    // VPDMB-30 (st_physics)  
   }
   //JP
   else if(triggerSetup == 1)
@@ -217,7 +188,7 @@ void runPicoLambdaAnaMaker3(){
   picoLambdaAnaMaker->setDecayMode(StPicoHFEvent::kTwoParticleDecay); //to setup secondary vertices as StHFPair
 
 
-  hfCuts->setCutEta(1.5);
+  hfCuts->setCutEta(1.);
   hfCuts->setCutPtMin(0.15); //global min. pT cut
 
   hfCuts->setCutDcaMin(0.3,StHFCuts::kPion); //original 0.3, loose 0.1
@@ -302,7 +273,7 @@ void runPicoLambdaAnaMaker3(){
     //if(i%500==0) cout << "Working on eventNumber " << i << endl;
 
     chain->Clear();
-    //int iret = chain->Make(i);
+    int iret = chain->Make(i);
 
     if(iret) 
     { 
