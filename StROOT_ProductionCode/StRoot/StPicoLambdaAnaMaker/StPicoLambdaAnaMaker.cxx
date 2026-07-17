@@ -549,7 +549,7 @@ int StPicoLambdaAnaMaker::createCandidates() {
       if (mIdxPicoProtons[idxProton] == mIdxPicoPions[idxPion]) continue;
 
       // -- Making pair, want proton first for cosThetaStar calculation
-      StHFPair pair(proton, pion, mHFCuts->getHypotheticalMass(StHFCuts::kProton), mHFCuts->getHypotheticalMass(StHFCuts::kPion), mIdxPicoProtons[idxProton], mIdxPicoPions[idxPion], mPrimVtx, mBField, true);
+      StHFPair pair(proton, pion, mHFCuts->getHypotheticalMass(StHFCuts::kProton), mHFCuts->getHypotheticalMass(StHFCuts::kPion), mIdxPicoProtons[idxProton], mIdxPicoPions[idxPion], mPrimVtx, mBField, false);
 
       //cout<<pair.prodPlane().x()<<endl;
 

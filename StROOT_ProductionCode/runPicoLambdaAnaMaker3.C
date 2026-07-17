@@ -42,11 +42,11 @@ void runPicoLambdaAnaMaker3(){
 
   stringstream input;
   //input<<"/star/u/jjiastar/pwg/Spin/production/"<<run<<"/"<<run<<".0"<<seg<<".list";
-  input<<"/gpfs01/star/pwg/fliu/production/pp2024/FileList/25121016.list"
+  input<<"/gpfs01/star/pwg/fliu/production/pp2024/FileList/121.list";
   run = 25121016;
   stringstream output;
   //output<<"/star/u/jjiastar/pwg/Spin/production/output/"<<run<<"_"<<seg<<".root";
-  output<<"/gpfs01/star/pwg/fliu/production/pp2024/PicoDstLambda/25121016picoDstLambda.root"
+  output<<"/gpfs01/star/pwg/fliu/production/pp2024/PicoDstLambda/Helix121picoDstLambda.root";
   std::string inputFileStr = input.str();
   std::string outputFileStr = output.str();
 
@@ -303,7 +303,7 @@ void runPicoLambdaAnaMaker3(){
     //if(i%500==0) cout << "Working on eventNumber " << i << endl;
 
     chain->Clear();
-    //int iret = chain->Make(i);
+    int iret = chain->Make(i);
 
     if(iret) 
     { 
