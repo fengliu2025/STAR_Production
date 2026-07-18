@@ -13,6 +13,7 @@
 #include "macros/loadSharedHFLibraries.C"
 
 #include <iostream>
+#include <fstream>
 #include <ctime>
 #include <cstdio>
 
@@ -28,9 +29,8 @@ class StChain;
 
 //triggerSetup = 0 - MB, 1 - JP2
 //void runPicoLambdaAnaMaker3(const int run, const int seg){
-void runPicoLambdaAnaMaker3(){
+void runPicoLambdaAnaMaker3(int InputFileIndex){
   int run =0 ; 
-  int seg = 0 ; 
   const unsigned int makerMode = 0 /*kAnalyze*/;
   const Char_t *badRunListFileName = "picoList_bad_MB.list";
   const Char_t *treeName = "picoHFtree";
@@ -40,13 +40,31 @@ void runPicoLambdaAnaMaker3(){
   const int triggerSetup = 0;
 
 
+  std::ifstream FileListTxt("/gpfs01/star/pwg/fliu/production/pp2024/FileList/FileList.txt");
+  if(!filelist.is_open()){
+    std::cerr<<"can't open the file :FileList.txt"<<std::endl;
+  }
+
+  std::string line 
+  std::vector<std::string> AllList;
+  while(std::getline(FileListTxt,line)){
+    AllList.push_back(line);
+  }
+
+  if(InputFileIndex > AllList.size()){
+    std::cout<<"Check the InputFileIndex"<<std::endl;
+    return;
+  }
+
+
+  int run = atoi(AllList[InputFileIndex].substr(0, 8).c_str());
+
+
   stringstream input;
-  //input<<"/star/u/jjiastar/pwg/Spin/production/"<<run<<"/"<<run<<".0"<<seg<<".list";
-  input<<"/gpfs01/star/pwg/fliu/production/pp2024/FileList/121.list";
-  run = 25121016;
+  input<<"/gpfs01/star/pwg/fliu/production/pp2024/FileList/"<<AllList[InputFileIndex];
   stringstream output;
-  //output<<"/star/u/jjiastar/pwg/Spin/production/output/"<<run<<"_"<<seg<<".root";
-  output<<"/gpfs01/star/pwg/fliu/production/pp2024/PicoDstLambda/Helix121picoDstLambda.root";
+  //output<<"/gpfs01/star/pwg/fliu/production/pp2024/PicoDstLambda/Helix121picoDstLambda.root";
+  output<<"/gpfs01/star/pwg/fliu/production/pp2024/PicoDstLambda/HRun"<<run<<"picoDstLambda.root";
   std::string inputFileStr = input.str();
   std::string outputFileStr = output.str();
 
