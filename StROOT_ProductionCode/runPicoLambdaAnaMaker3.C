@@ -16,7 +16,7 @@
 #include <fstream>
 #include <ctime>
 #include <cstdio>
-
+#include <vector>
 #include "StPicoLambdaAnaMaker/StPicoLambdaAnaMaker.h"
 
 using namespace std;
@@ -39,13 +39,13 @@ void runPicoLambdaAnaMaker3(int InputFileIndex){
   string SL_version = "SL20c";
   const int triggerSetup = 0;
 
-
-  std::ifstream FileListTxt("/gpfs01/star/pwg/fliu/production/pp2024/FileList/FileList.txt");
-  if(!filelist.is_open()){
+  
+  std::ifstream FileListTxt("/gpfs01/star/pwg/fliu/production/pp2024/FileList/RunFileLists/FileList.txt");
+  if(!FileListTxt.is_open()){
     std::cerr<<"can't open the file :FileList.txt"<<std::endl;
   }
 
-  std::string line 
+  std::string line; 
   std::vector<std::string> AllList;
   while(std::getline(FileListTxt,line)){
     AllList.push_back(line);
@@ -59,12 +59,16 @@ void runPicoLambdaAnaMaker3(int InputFileIndex){
 
   int run = atoi(AllList[InputFileIndex].substr(0, 8).c_str());
 
-
+  
   stringstream input;
-  input<<"/gpfs01/star/pwg/fliu/production/pp2024/FileList/"<<AllList[InputFileIndex];
+  input<<"/gpfs01/star/pwg/fliu/production/pp2024/FileList/RunFileLists/"<<AllList[InputFileIndex];
+  //input<<"/gpfs01/star/pwg/fliu/production/pp2024/FileList/AllFileList.list";//<<AllList[InputFileIndex];
+  //input<<"/gpfs/mnt/gpfs01/star/pwg/fliu/LL_Spin_Correlation/test_xrootd2.list";run = 25122005;
   stringstream output;
   //output<<"/gpfs01/star/pwg/fliu/production/pp2024/PicoDstLambda/Helix121picoDstLambda.root";
-  output<<"/gpfs01/star/pwg/fliu/production/pp2024/PicoDstLambda/HRun"<<run<<"picoDstLambda.root";
+  output<<"/gpfs01/star/pwg/fliu/production/pp2024/PicoDstLambda/HRun"<<AllList[InputFileIndex].substr(0, 10)<<"picoDstLambda.root";
+  //output<<"/gpfs01/star/pwg/fliu/production/pp2024/PicoDstLambda/test.root";
+  //output<<"./test.root";
   std::string inputFileStr = input.str();
   std::string outputFileStr = output.str();
 
