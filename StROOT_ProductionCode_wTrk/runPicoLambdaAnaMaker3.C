@@ -40,7 +40,7 @@ void runPicoLambdaAnaMaker3(int InputFileIndex){
   const int triggerSetup = 0;
 
   
-  std::ifstream FileListTxt("/gpfs01/star/pwg/fliu/production/pp2012/FileList/RunFileLists/FileList.txt");
+  std::ifstream FileListTxt("/gpfs01/star/pwg/fliu/production/pp2024/FileList/RunFileLists/FileList.txt");
   if(!FileListTxt.is_open()){
     std::cerr<<"can't open the file :FileList.txt"<<std::endl;
   }
@@ -57,12 +57,12 @@ void runPicoLambdaAnaMaker3(int InputFileIndex){
   }
 
 
-  int run = atoi(AllList[InputFileIndex].substr(0, 8).c_str());
+  run = atoi(AllList[InputFileIndex].substr(0, 8).c_str());
 
   
   stringstream input;
-  //input<<"/gpfs01/star/pwg/fliu/production/pp2024/FileList/RunFileLists/"<<AllList[InputFileIndex];
-  input<<"/gpfs01/star/pwg/fliu/production/pp2012/FileList/RunFileLists/"<<AllList[InputFileIndex];
+  input<<"/gpfs01/star/pwg/fliu/production/pp2024/FileList/RunFileLists/"<<AllList[InputFileIndex];
+  //input<<"/gpfs01/star/pwg/fliu/production/pp2012/FileList/RunFileLists/"<<AllList[InputFileIndex];
   //input<<"/gpfs01/star/pwg/fliu/production/pp2024/FileList/AllFileList.list";//<<AllList[InputFileIndex];
   //input<<"/gpfs/mnt/gpfs01/star/pwg/fliu/LL_Spin_Correlation/test_xrootd2.list";run = 25122005;
   stringstream output;
@@ -242,8 +242,8 @@ void runPicoLambdaAnaMaker3(int InputFileIndex){
   picoLambdaAnaMaker->setDecayMode(StPicoHFEvent::kTwoParticleDecay); //to setup secondary vertices as StHFPair
 
 
-  //hfCuts->setCutEta(1.5);//2024 data 
-  hfCuts->setCutEta(1.0);//2012 data 
+  hfCuts->setCutEta(1.5);//2024 data  
+  //hfCuts->setCutEta(1.0);//2012 data 
   hfCuts->setCutPtMin(0.15); //global min. pT cut
 
   hfCuts->setCutDcaMin(0.3,StHFCuts::kPion); //original 0.3, loose 0.1

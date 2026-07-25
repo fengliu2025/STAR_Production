@@ -8,6 +8,6 @@ endif
 
 set parameter = "$1"
 
-starver SL21d
+starver SL24y
 
 root4star -l -b -q runPicoLambdaAnaMaker3.C\(${parameter}\)

@@ -84,7 +84,8 @@ int StPicoLambdaAnaMaker::InitHF() {
     ntp_Lambda->Branch("p1_hasTOFinfo", p1_hasTOFinfo, "p1_hasTOFinfo[NLambda]/I");   //Float_t p1_hasTOFinfo
     ntp_Lambda->Branch("p1_dedx", p1_dedx, "p1_dedx[NLambda]/F");
     ntp_Lambda->Branch("p1_beta", p1_beta, "p1_beta[NLambda]/F");
-
+    ntp_Lambda->Branch("p1_dcaxy",p1_dcaxy,"p1_dcaxy[NLambda]/F"); //Feng Liu 2026 7/24
+    ntp_Lambda->Branch("p1_nSigmaProton",p1_nSigmaProton,"p1_nSigmaProton[NLambda]/F");//Feng Liu 2026 7/24
     //pion
     ntp_Lambda->Branch("p2_InEventID", p2_InEventID, "p2_InEventID[NLambda]/I");               //Float_t p2_InEventID
     ntp_Lambda->Branch("p2_pt", p2_pt, "p2_pt[NLambda]/F");               //Float_t p2_pt
@@ -95,7 +96,8 @@ int StPicoLambdaAnaMaker::InitHF() {
     ntp_Lambda->Branch("p2_hasTOFinfo", p2_hasTOFinfo, "p2_hasTOFinfo[NLambda]/I");   //Float_t p2_hasTOFinfo
     ntp_Lambda->Branch("p2_dedx", p2_dedx, "p2_dedx[NLambda]/F");
     ntp_Lambda->Branch("p2_beta", p2_beta, "p2_beta[NLambda]/F");
-
+    ntp_Lambda->Branch("p2_dcaxy",p2_dcaxy,"p2_dcaxy[NLambda]/F");        //Feng Liu 2026 7/24
+    ntp_Lambda->Branch("p2_nSigmaPion",p2_nSigmaPion,"p2_nSigmaPion[NLambda]/F"); //Feng Liu 2026 7/24
     //pair
     ntp_Lambda->Branch("pair_charge", pair_charge, "pair_charge[NLambda]/I");      //Int_t charge
     ntp_Lambda->Branch("pair_DCAdaughters", pair_DCAdaughters, "pair_DCAdaughters[NLambda]/F");      //Int_t pair_DCAdaughters
@@ -119,10 +121,12 @@ int StPicoLambdaAnaMaker::InitHF() {
     ntp_Lambda->Branch("track_phi"      ,track_phi        ,"track_phi[track_Number]/F");
     ntp_Lambda->Branch("track_InEventID",track_InEventID  ,"track_InEventID[track_Number]/I");
     ntp_Lambda->Branch("track_dca"      ,track_dca        ,"track_dca[track_Number]/F");
-    ntp_Lambda->Branch("track_isPion"   ,track_isPion     ,"track_isPion[track_Number]/O");
-    ntp_Lambda->Branch("track_isKaon"   ,track_isKaon     ,"track_isKaon[track_Number]/O");
-    ntp_Lambda->Branch("track_isProton" ,track_isProton   ,"track_isProton[track_Number]/O");
-
+    ntp_Lambda->Branch("track_dcaxy"      ,track_dcaxy        ,"track_dcaxy[track_Number]/F");
+    ntp_Lambda->Branch("track_nSigmaPion"   ,track_nSigmaPion     ,"track_nSigmaPion[track_Number]/F");
+    ntp_Lambda->Branch("track_nSigmaKaon"   ,track_nSigmaKaon     ,"track_nSigmaKaon[track_Number]/F");
+    ntp_Lambda->Branch("track_nSigmaProton" ,track_nSigmaProton   ,"track_nSigmaProton[track_Number]/F");
+    ntp_Lambda->Branch("track_dedx"         ,track_dedx           ,"track_dedx[track_Number]/F");
+    ntp_Lambda->Branch("track_ch"           ,track_ch             ,"track_ch[track_Number]/I");
 
     //-----------------------Set branches END------------------------------------------------------------------------------
 
@@ -614,9 +618,8 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
   //fill trigger
   mNTrigs=0;
   //vector<unsigned int> triggerIds = picoEvent->triggerIds();
-  //unsigned int mStPhysics_TriggerIDs[5]={910001, 910003, 910013, 910802, 910804};
-  unsigned int mStPhysics_TriggerIDs[2]={370001,370011};
-  for(int itrig=0; itrig<2; itrig++){
+  unsigned int mStPhysics_TriggerIDs[5]={910001, 910003, 910013, 910802, 910804};
+  for(int itrig=0; itrig<5; itrig++){
     if(picoEvent->isTrigger(mStPhysics_TriggerIDs[itrig])){
       mTrigId[mNTrigs] = mStPhysics_TriggerIDs[itrig];
       mNTrigs++;
@@ -747,7 +750,9 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
       p1_pt[NLambda]  = part1->gPt();
       p1_phi[NLambda] = part1->gMom(pair->decayVertex(), mBField).Phi(); //20240215 update - calculate at SV, check usage of B field
       p1_eta[NLambda] = part1->gMom(pair->decayVertex() ,mBField).PseudoRapidity();
-      p1_dca[NLambda] = part1->gDCAxy(mPrimVtx.x(), mPrimVtx.y());
+      p1_dcaxy[NLambda] = part1->gDCAxy(mPrimVtx.x(), mPrimVtx.y());
+      p1_dca[NLambda] = part1->gDCA(vtxPos).Mag(); //Feng Liu 2026/7/24
+      p1_nSigmaProton[NLambda] = part1->nSigmaProton();//Feng Liu 2026/7/24
       p1_ch[NLambda] = part1->charge();
       p1_dedx[NLambda] = part1->dEdx();
       p1_beta[NLambda] =-999.0;
@@ -766,7 +771,9 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
       p2_pt[NLambda] = part2->gPt();
       p2_phi[NLambda] = part2->gMom(pair->decayVertex(), mBField).Phi(); //20240215 update - calculate at SV, check usage of B field
       p2_eta[NLambda] = part2->gMom(pair->decayVertex() ,mBField).PseudoRapidity(); 
-      p2_dca[NLambda] = part2->gDCAxy(mPrimVtx.x(), mPrimVtx.y());
+      p2_dcaxy[NLambda] = part2->gDCAxy(mPrimVtx.x(), mPrimVtx.y());
+      p2_dca[NLambda] = part2->gDCA(vtxPos).Mag(); //Feng Liu 2026/7/24
+      p2_nSigmaPion[NLambda] = part2->nSigmaPion();
       p2_ch[NLambda] = part2->charge();
       p2_dedx[NLambda] = part2->dEdx();
       p2_beta[NLambda] =-999.0;
@@ -829,9 +836,12 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
                 track_phi[track_Number]         = trk->gMom().Phi();
                 track_InEventID[track_Number]   = i;
                 track_dca[track_Number]         = trk->gDCA(PrimaryVtxPos).Mag();
-                track_isPion[track_Number]      =isPion(trk);
-                track_isKaon[track_Number]      =isKaon(trk);
-                track_isProton[track_Number]    =isProton(trk);
+                track_dcaxy[track_Number]         = trk->gDCAxy(mPrimVtx.x(), mPrimVtx.y());
+                track_nSigmaPion[track_Number]      =trk->nSigmaProton();
+                track_nSigmaKaon[track_Number]      =trk->nSigmaKaon();
+                track_nSigmaProton[track_Number]    =trk->nSigmaProton();
+                track_dedx[track_Number]            =trk->dEdx();
+                track_ch[track_Number]              =trk->charge();
                 track_Number++;             
         }
   }

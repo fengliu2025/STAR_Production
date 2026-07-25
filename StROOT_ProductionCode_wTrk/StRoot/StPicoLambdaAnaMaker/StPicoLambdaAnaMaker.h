@@ -173,14 +173,16 @@ private:
   Int_t p1_ch[1000];
   Int_t p1_hasTOFinfo[1000];
   Float_t p1_dedx[1000], p1_beta[1000];
-
+  Float_t p1_nSigmaProton[1000]; //Feng Liu 2026 7/24
+  Float_t p1_dcaxy[1000];        //Feng Liu 2026 7/24
   //daughter 2
   Int_t p2_InEventID[1000];
   Float_t p2_phi[1000], p2_eta[1000], p2_pt[1000], p2_dca[1000];
   Int_t p2_ch[1000];
   Int_t p2_hasTOFinfo[1000];
   Float_t p2_dedx[1000], p2_beta[1000];
-
+  Float_t p2_nSigmaPion[1000]; //Feng Liu 2026 7/24
+  Float_t p2_dcaxy[1000];      //Feng Liu 2026 7/24
   //pair
   Int_t pair_charge[1000];
   Float_t pair_DCAdaughters[1000];
@@ -200,9 +202,12 @@ private:
   Float_t track_phi[1000];
   Int_t track_InEventID[1000];
   Float_t track_dca[1000];
-  Bool_t track_isPion[1000];
-  Bool_t track_isKaon[1000];
-  Bool_t track_isProton[1000];
+  Float_t track_dcaxy[1000];
+  Float_t track_nSigmaPion[1000];
+  Float_t track_nSigmaKaon[1000];
+  Float_t track_nSigmaProton[1000];
+  Float_t track_dedx[1000];
+  Int_t   track_ch[1000];
 
 	//
 
