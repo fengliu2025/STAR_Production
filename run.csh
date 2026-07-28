@@ -7,7 +7,7 @@ endif
 
 set parameter = "$1"
 
-cd ./StROOT_ProductionCode_wTrk
+cd ./StROOT_ProductionCode_wTrk_K0S
 
 chmod u+x ./runMacro.csh
 

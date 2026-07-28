@@ -298,8 +298,8 @@ int StPicoLambdaAnaMaker::FinishHF()
    {
      heta_pi->Write();
      heta_p->Write();
-     ntp_Lambda->Write(); //for candidates
-    //ntp_K0s->Write();
+     //ntp_Lambda->Write(); //for candidates
+    ntp_K0s->Write();
    }
 
   return kStOK;
@@ -797,7 +797,7 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
       p1_eta[NK0s] = part1->gMom(pair->decayVertex() ,mBField).PseudoRapidity();
       p1_dcaxy[NK0s] = part1->gDCAxy(mPrimVtx.x(), mPrimVtx.y());
       p1_dca[NK0s] = part1->gDCA(vtxPos).Mag(); //Feng Liu 2026/7/24
-      p1_nSigmaProton[NK0s] = part1->nSigmaProton();//Feng Liu 2026/7/24
+      p1_nSigmaPion[NK0s] = part1->nSigmaPion();//Feng Liu 2026/7/24
       p1_ch[NK0s] = part1->charge();
       p1_dedx[NK0s] = part1->dEdx();
       p1_beta[NK0s] =-999.0;
@@ -807,7 +807,7 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
       if(bTofPidTraitsIndex1>=0){
 	         StPicoBTofPidTraits *btofPidTraits1 = mPicoDst->btofPidTraits(bTofPidTraitsIndex1);
 	         if(btofPidTraits1->btofMatchFlag()) {
-	               p1_beta[NLambda]     = btofPidTraits1->btofBeta();
+	               p1_beta[NK0s]     = btofPidTraits1->btofBeta();
 	         }
       }
 
@@ -828,7 +828,7 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
       if(bTofPidTraitsIndex2>=0){
         StPicoBTofPidTraits *btofPidTraits2 = mPicoDst->btofPidTraits(bTofPidTraitsIndex2);
         if(btofPidTraits2->btofMatchFlag()) {
-          p2_beta[NLambda]     = btofPidTraits2->btofBeta();
+          p2_beta[NK0s]     = btofPidTraits2->btofBeta();
         }
       }
 
