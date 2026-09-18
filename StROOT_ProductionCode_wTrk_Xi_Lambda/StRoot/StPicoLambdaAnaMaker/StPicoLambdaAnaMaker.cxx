@@ -695,9 +695,9 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
         
         StHFPair pair_copy(pair);
         //update the TertiaryVertex
-        TVector3 const vtxToV0_Updated = pair_copy.mDecayVertex - Xi_Triplet.mDecayVertex; 
-        pair_copy.mPointAngle= vtxToV0_Updated.Angle(pair_copy.mLorentzVector.Vect());
-        pair_copy.mDecayLength = vtxToV0_Updated.Mag();
+        TVector3 const vtxToV0_Updated = pair_copy.decayVertex() - Xi_Triplet.decayVertex(); 
+        pair_copy.SetmPointingAngle( vtxToV0_Updated.Angle(pair_copy.lorentzVector().Vect()) ) ;
+        pair_copy.SetmDecayLength ( vtxToV0_Updated.Mag() );
         
         if(!mHFCuts->isGoodTertiaryVertexPair(pair_copy) ) continue;
         
@@ -726,16 +726,16 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
         DauLambda_Dau2_ch[NXi]        = part2->charge();;  
         DauLambda_Dau2_dca[NXi]       = part2->gDCA(vtxPos).Mag(); 
         // Dau pion3 
-        pion3_InEventID[NXi]          = mIdxPicoPions[idxPion2]
+        pion3_InEventID[NXi]          = mIdxPicoPions[idxPion2];
         pion3_pt[NXi]                 = BachelorPion->gPt();
-        pion3_eta[NXi]                = BachelorPion->gMom(Xi_Triplet.decayVertex(),mBField).PseudoRapidity;
-        pion3_phi[NXi]                = BachelorPion->gMom(Xi_Triplet.decayVertex(),mBField).Phi;;
-        pion3_ch[NXi]                 = BachelorPion.charge();
-        pion3_dca[NXi]                = BachelorPion.gDCA(vtxPos).Mag();
+        pion3_eta[NXi]                = BachelorPion->gMom(Xi_Triplet.decayVertex(),mBField).PseudoRapidity();
+        pion3_phi[NXi]                = BachelorPion->gMom(Xi_Triplet.decayVertex(),mBField).Phi();
+        pion3_ch[NXi]                 = BachelorPion->charge();
+        pion3_dca[NXi]                = BachelorPion->gDCA(vtxPos).Mag();
         //Xi pair 
         Xi_Charge[NXi]                = -999;
-        if(pair_charge[NLambda] == 0 && p1_ch[NLambda] ==1  && BachelorPion.charge() == -1  ) Xi_Charge[NXi] = -1;
-        else if(pair_charge[NLambda] == 0 && p1_ch[NLambda] ==-1  && BachelorPion.charge() == +1) Xi_Charge[NXi] = +1;
+        if(pair_charge[NLambda] == 0 && p1_ch[NLambda] ==1  && BachelorPion->charge() == -1  ) Xi_Charge[NXi] = -1;
+        else if(pair_charge[NLambda] == 0 && p1_ch[NLambda] ==-1  && BachelorPion->charge() == +1) Xi_Charge[NXi] = +1;
         else Xi_Charge[NXi] = 0;
 
         Xi_DCAdaughters[NXi]          = Xi_Triplet.dcaDaughters();
@@ -746,7 +746,7 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
         Xi_phi[NXi]                   = Xi_Triplet.phi();
         Xi_mass[NXi]                  = Xi_Triplet.m();
 
-        StPicoPhysicalHelix XiHelix(Xi_Triplet.mLorentzVector.Vect(),Xi_Triplet.mDecayVertex,,mBField*kilogauss, Xi_Charge[NXi]);
+        StPicoPhysicalHelix XiHelix(Xi_Triplet.lorentzVector().Vect(),Xi_Triplet.decayVertex,mBField*kilogauss, Xi_Charge[NXi]);
         XiHelix.moveOrgin(XiHelix.pathLength(vtxPos));
         Xi_DCA[NXi] = (XiHelix.origin() - vtxPos ).Mag();
 

@@ -187,7 +187,7 @@ private:
 
   Int_t NXi; 
   // Dau Lambda 
-  Int DauLambda_charge[1000]; 
+  Int_t DauLambda_charge[1000]; 
   Float_t DauLambda_DCAdaughters[1000];
   Float_t DauLambda_theta[1000]; 
   Float_t DauLambda_decayL[1000];

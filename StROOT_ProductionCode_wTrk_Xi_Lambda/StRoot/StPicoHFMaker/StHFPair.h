@@ -81,6 +81,9 @@ class StHFPair : public TObject
   float pz() const;
   float DcaToPrimaryVertex() const;
 
+  void SetmPointingAngle(float newPointingAngle); // Feng Liu 9/18/2026
+  void SetmDecayLength(float newDecayLength);     // Feng Liu 9/18/2026
+
  private:
   StHFPair(StHFPair const &);
   StHFPair& operator=(StHFPair const &);
@@ -128,5 +131,7 @@ inline float StHFPair::v0x() const { return mDecayVertex.x();}
 inline float StHFPair::v0y() const { return mDecayVertex.y();}
 inline float StHFPair::v0z() const { return mDecayVertex.z();}
 inline float StHFPair::DcaToPrimaryVertex() const { return mDcaToPrimaryVertex; }
+inline void SetmPointingAngle(float newPointingAngle) {mPointingAngle =  newPointingAngle} ;
+inline void SetmDecayLength(float newDecayLength) {mDecayLength = newDecayLength};
 #endif
 
