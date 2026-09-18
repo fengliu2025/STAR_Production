@@ -702,7 +702,7 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
         if(!mHFCuts->isGoodTertiaryVertexPair(pair_copy) ) continue;
         
             
-        DauLambda_charge[NXi] = pair_charge ; 
+        DauLambda_charge[NXi] = pair_charge[NLambda] ; 
         DauLambda_DCAdaughters[NXi] = pair_copy.dcaDaughters() ;
         DauLambda_theta[NXi] = pair_copy.pointingAngle(); 
         DauLambda_decayL[NXi]= pair_copy.decayLength();
@@ -746,8 +746,8 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
         Xi_phi[NXi]                   = Xi_Triplet.phi();
         Xi_mass[NXi]                  = Xi_Triplet.m();
 
-        StPicoPhysicalHelix XiHelix(Xi_Triplet.lorentzVector().Vect(),Xi_Triplet.decayVertex,mBField*kilogauss, Xi_Charge[NXi]);
-        XiHelix.moveOrgin(XiHelix.pathLength(vtxPos));
+        StPicoPhysicalHelix XiHelix(Xi_Triplet.lorentzVector().Vect(),Xi_Triplet.decayVertex(),mBField*kilogauss, Xi_Charge[NXi]);
+        XiHelix.moveOrigin(XiHelix.pathLength(vtxPos));
         Xi_DCA[NXi] = (XiHelix.origin() - vtxPos ).Mag();
 
         NXi++;
