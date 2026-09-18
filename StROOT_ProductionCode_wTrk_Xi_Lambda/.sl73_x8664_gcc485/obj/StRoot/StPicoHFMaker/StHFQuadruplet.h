@@ -1,1 +1,0 @@
-../../../../StRoot/StPicoHFMaker/StHFQuadruplet.h
