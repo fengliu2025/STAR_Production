@@ -693,7 +693,7 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
       //create the Xi Candidate 
       for (unsigned short idxPion2 =0 ; idxPion2 < mIdxPicoPions.size();idxPion2 ++){
         StPicoTrack const *BachelorPion = mPicoDst->track(mIdxPicoPions[idxPion2]);
-        StHFPair Xi_Triplet(BachelorPion, pair, mHFCuts->getHypotheticalMass(StHFCuts::kPion),pair->m(), mIdxPicoPions[idxPion2], NLambda, mPrimVtx, mBField, false );
+        StHFPair Xi_Triplet(BachelorPion, pair, mHFCuts->getHypotheticalMass(StHFCuts::kPion),pair->m(), mIdxPicoPions[idxPion2], NLambda, mPrimVtx, mBField, true );
   
 	if(!mHFCuts->isGoodSecondaryVertexPair_2(Xi_Triplet) ) continue;
 	std::cout<<" Xi m " << Xi_Triplet.m() <<std::endl;
