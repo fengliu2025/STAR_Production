@@ -696,12 +696,12 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
         StHFPair Xi_Triplet(BachelorPion, pair, mHFCuts->getHypotheticalMass(StHFCuts::kPion),pair->m(), mIdxPicoPions[idxPion2], NLambda, mPrimVtx, mBField, true );
   
 	if(!mHFCuts->isGoodSecondaryVertexPair_2(Xi_Triplet) ) continue;
-	std::cout<<" Xi m " << Xi_Triplet.m() <<std::endl;
+	/*std::cout<<" Xi m " << Xi_Triplet.m() <<std::endl;
   std::cout<<" cos theta " <<std::cos(Xi_Triplet.pointingAngle()) <<std::endl;
 	std::cout<<"decay L  " <<Xi_Triplet.decayLength() <<std::endl;
 	std::cout<<"dcaDaughters " <<Xi_Triplet.dcaDaughters() <<std::endl;
 	std::cout<<"DcaToPrimaryVertex() " <<Xi_Triplet.DcaToPrimaryVertex() <<std::endl;
-	std::cout<<"-------------"<<std::endl;
+	std::cout<<"-------------"<<std::endl;*/
 	
 	StHFPair pair_copy(pair);
         //update the TertiaryVertex
