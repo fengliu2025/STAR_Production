@@ -7,10 +7,10 @@ endif
 
 set parameter = "$1"
 
-cd ./StROOT_ProductionCode_wTrk_K0S
+cd ./StROOT_ProductionCode_wTrk_Xi_Lambda
 
 chmod u+x ./runMacro.csh
 
 singularity exec -e -B /direct -B /star -B /afs -B /gpfs -B /sdcc/lustre02 /cvmfs/star.sdcc.bnl.gov/containers/rhic_sl7.sif ./runMacro.csh ${parameter} 
 
-mv ./H* /gpfs01/star/pwg/fliu/production/pp2024/PicoDstK0s_P24iy_wTrk/
+mv ./H* /gpfs01/star/pwg/fliu/production/pp2024/PicoDstLambdaXi_P24iy_wTrk/
