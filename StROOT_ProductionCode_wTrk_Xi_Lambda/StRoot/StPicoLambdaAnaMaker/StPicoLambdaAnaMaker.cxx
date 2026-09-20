@@ -693,15 +693,15 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
       //create the Xi Candidate 
       for (unsigned short idxPion2 =0 ; idxPion2 < mIdxPicoPions.size();idxPion2 ++){
         StPicoTrack const *BachelorPion = mPicoDst->track(mIdxPicoPions[idxPion2]);
-        StHFPair Xi_Triplet(BachelorPion, pair, mHFCuts->getHypotheticalMass(StHFCuts::kPion),pair->m(), mIdxPicoPions[idxPion2], NLambda, mPrimVtx, mBField, true );
+        StHFPair Xi_Triplet(BachelorPion, pair, mHFCuts->getHypotheticalMass(StHFCuts::kPion),pair->m(), mIdxPicoPions[idxPion2], NLambda, mPrimVtx, mBField, false );
   
 	if(!mHFCuts->isGoodSecondaryVertexPair_2(Xi_Triplet) ) continue;
-	//std::cout<<" Xi m " << Xi_Triplet.m() <<std::endl;
-	//std::cout<<" cos theta " <<std::cos(Xi_Triplet.pointingAngle()) <<std::endl;
-	//std::cout<<"decay L  " <<Xi_Triplet.decayLength() <<std::endl;
-	//std::cout<<"dcaDaughters " <<Xi_Triplet.dcaDaughters() <<std::endl;
-	//std::cout<<"DcaToPrimaryVertex() " <<Xi_Triplet.DcaToPrimaryVertex() <<std::endl;
-	//std::cout<<"-------------"<<std::endl;
+	std::cout<<" Xi m " << Xi_Triplet.m() <<std::endl;
+  std::cout<<" cos theta " <<std::cos(Xi_Triplet.pointingAngle()) <<std::endl;
+	std::cout<<"decay L  " <<Xi_Triplet.decayLength() <<std::endl;
+	std::cout<<"dcaDaughters " <<Xi_Triplet.dcaDaughters() <<std::endl;
+	std::cout<<"DcaToPrimaryVertex() " <<Xi_Triplet.DcaToPrimaryVertex() <<std::endl;
+	std::cout<<"-------------"<<std::endl;
 	
 	StHFPair pair_copy(pair);
         //update the TertiaryVertex
