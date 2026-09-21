@@ -157,7 +157,7 @@ StHFPair::StHFPair(StPicoTrack const * const particle1, StHFPair const * const p
   TVector3 const p2Mom(particle2->px(),particle2->py(),particle2->pz());
   TVector3 const p2Origin(particle2->v0x(),particle2->v0y(),particle2->v0z());
   StPicoPhysicalHelix p2Helix(p2Mom,p2Origin,bField*kilogauss, p2Charge);
-  //StPicoPhysicalHelix p2Helix(p2Mom,p2Origin,0, p2Charge); //Feng Liu 9/20/2026
+  
 
   // --move origins of helices to the primary vertex origin
   p1Helix.moveOrigin(p1Helix.pathLength(vtx));
@@ -193,7 +193,8 @@ StHFPair::StHFPair(StPicoTrack const * const particle1, StHFPair const * const p
     
     // -- get momenta at DCA_pair
     p1MomAtDca = p1Helix.momentumAt(ss.first,  bField * kilogauss);
-    p2MomAtDca = p2Helix.momentumAt(ss.second, bField * kilogauss);
+    //p2MomAtDca = p2Helix.momentumAt(ss.second, bField * kilogauss);
+    p2MomAtDca.SetXYZ(p2Mom.X(),p2Mom.Y(),p2Mom.Z() );//Feng Liu  9/21/2026
   }
   else
   {
