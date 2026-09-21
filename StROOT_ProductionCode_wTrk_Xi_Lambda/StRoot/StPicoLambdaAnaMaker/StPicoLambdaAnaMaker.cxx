@@ -694,22 +694,18 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
       for (unsigned short idxPion2 =0 ; idxPion2 < mIdxPicoPions.size();idxPion2 ++){
         StPicoTrack const *BachelorPion = mPicoDst->track(mIdxPicoPions[idxPion2]);
         StHFPair Xi_Triplet(BachelorPion, pair, mHFCuts->getHypotheticalMass(StHFCuts::kPion),pair->m(), mIdxPicoPions[idxPion2], NLambda, mPrimVtx, mBField, true );
-  
-	if(!mHFCuts->isGoodSecondaryVertexPair_2(Xi_Triplet) ) continue;
-	/*std::cout<<" Xi m " << Xi_Triplet.m() <<std::endl;
-  std::cout<<" cos theta " <<std::cos(Xi_Triplet.pointingAngle()) <<std::endl;
-	std::cout<<"decay L  " <<Xi_Triplet.decayLength() <<std::endl;
-	std::cout<<"dcaDaughters " <<Xi_Triplet.dcaDaughters() <<std::endl;
-	std::cout<<"DcaToPrimaryVertex() " <<Xi_Triplet.DcaToPrimaryVertex() <<std::endl;
-	std::cout<<"-------------"<<std::endl;*/
+        if(mIdxPicoPions[idxPion2] == pair_copy.particle1Idx()) continue;
+        if(mIdxPicoPions[idxPion2] == pair_copy.particle2Idx()) continue;
+	      if(!mHFCuts->isGoodSecondaryVertexPair_2(Xi_Triplet) ) continue;
+
 	
-	StHFPair pair_copy(pair);
+	      StHFPair pair_copy(pair);
         //update the TertiaryVertex
         TVector3 const vtxToV0_Updated = pair_copy.decayVertex() - Xi_Triplet.decayVertex(); 
         pair_copy.SetmPointingAngle( vtxToV0_Updated.Angle(pair_copy.lorentzVector().Vect()) ) ;
         pair_copy.SetmDecayLength ( vtxToV0_Updated.Mag() );
        	 
-        //if(!mHFCuts->isGoodTertiaryVertexPair(pair_copy) ) continue;
+        if(!mHFCuts->isGoodTertiaryVertexPair(pair_copy) ) continue;
 
             
         DauLambda_charge[NXi] = pair_charge[NLambda] ; 

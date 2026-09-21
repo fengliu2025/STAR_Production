@@ -272,10 +272,10 @@ void runPicoLambdaAnaMaker3(int InputFileIndex){
   
   float dcaDaughtersMax_DauLam =  100; 
   float decayLengthMin_DauLam  =  0; 
-  float decayLengthMax_DauLam  =  25;
-  float cosThetaMin_DauLam     =  0; 
-  float massMin_DauLam =          0.9;
-  float massMax_DauLam =          1.3; 
+  float decayLengthMax_DauLam  =  100;
+  float cosThetaMin_DauLam     =  -1; 
+  float massMin_DauLam =          1.10;
+  float massMax_DauLam =          1.13; 
 
   hfCuts->setCutTertiaryPair(dcaDaughtersMax_DauLam, decayLengthMin_DauLam, decayLengthMax_DauLam, cosThetaMin_DauLam,massMin_DauLam,massMax_DauLam);
   
