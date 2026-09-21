@@ -224,6 +224,12 @@ StHFPair::StHFPair(StPicoTrack const * const particle1, StHFPair const * const p
     p1MomAtDca = p1Helix.momentumAt(ss_helix.first,  bField * kilogauss);
     p2MomAtDca = p2Helix.momentumAt(ss_helix.second, bField * kilogauss);
   }
+  //Feng Liu for test, 9/21/2026
+  std::cout<<"p2MomAtDca,px"<<p2MomAtDca.X()<<std::endl;
+  std::cout<<"p2MomAtDca,py"<<p2MomAtDca.Y()<<std::endl;
+  std::cout<<"p2MomAtDca,pz"<<p2MomAtDca.Z()<<std::endl;
+  std::cout<<"-----------------------------------------"<<std::endl;
+
     
   // -- calculate Lorentz vector of particle1-particle2 pair
   
