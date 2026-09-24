@@ -140,6 +140,8 @@ private:
   // -- ADD USER MEMBERS HERE ------------------- 
   TH1D *heta_pi;
   TH1D *heta_p;
+  TH2D *h2D_iTPCPrimaryMult_Trigger;
+  TH2D *h2D_iTPCPrimaryMultHighQ_Trigger;
 
   TTree *ntp_Lambda;
   TTree *ntp_K0s;

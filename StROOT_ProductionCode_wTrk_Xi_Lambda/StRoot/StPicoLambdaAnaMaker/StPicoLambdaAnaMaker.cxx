@@ -41,6 +41,8 @@ int StPicoLambdaAnaMaker::InitHF() {
     //add QA histogram
     heta_pi = new TH1D("heta_phi", "heta_pi", 400, -2.0, 2.0);
     heta_p = new TH1D("heta_p", "heta_p", 400, -2.0, 2.0);
+    h2D_iTPCPrimaryMult_Trigger      = new TH2D("h2D_iTPCPrimaryMult_Trigger","h2D_iTPCPrimaryMult_Trigger",100,-0.5,99.5,5,-0.5,4.5);
+    h2D_iTPCPrimaryMultHighQ_Trigger = new TH2D("h2D_iTPCPrimaryMultHighQ_Trigger","h2D_iTPCPrimaryMultHighQ_Trigger",100,-0.5,99.5,5,-0.5,4.5);
 
     //create TTree to store Lambda candidates
     ntp_Lambda = new TTree("ntp_Lambda", "Lambda TTree"); //create TTree
@@ -209,6 +211,9 @@ int StPicoLambdaAnaMaker::FinishHF()
    {
      heta_pi->Write();
      heta_p->Write();
+     h2D_iTPCPrimaryMult_Trigger      ->Write();
+     h2D_iTPCPrimaryMultHighQ_Trigger ->Write();
+
      ntp_Lambda->Write(); //for candidates
     //ntp_K0s->Write();
    }
@@ -547,6 +552,58 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
       mNTrigs++;
     }
   }
+
+  Int_t iTPCPrimaryMult      = 0;
+  Int_t iTPCPrimaryMultHighQ = 0;
+
+  for(Int_t i=0;i< mPicoDst->numberOfTracks();i++){
+    StPicoTrack *pTrack = mPicoDst->track(i);
+    if(!pTrack) continue;
+    if(!pTrack->isPrimary()) continue;
+    if(fabs(eta)>=1.5) continue;
+    
+    float eta = pTrack->pMom().Eta();
+    iTPCPrimaryMult++;
+
+    Int_t   nHits         = pTrack->nHitsFit();
+    Int_t   nHitsPoss     = pTrack->nHitsMax();
+    Float_t gDca = pTrack->gDCA(vtxPos).Mag();//pMuTrack->dcaGlobal().mag();
+    Float_t rhits = 1.0*nHits/nHitsPoss;
+
+    //if(nHits>15 && pt>0.1 && gDca<=5.0 && fabs(eta)<1.0 && rhits>0.52){                                         
+    if(nHits<=15 ) continue;
+    if(pt<=2.0) continue;
+    if(gDca>5.0) continue;
+    if(rhits<=0.52) continue;
+    iTPCPrimaryMultHighQ++;
+  }
+
+  for(int i =0 ; i < mNTrigs; i++){
+      if(mTrigId[i] == 910001){
+        h2D_iTPCPrimaryMult_Trigger      ->Fill(iTPCPrimaryMult,0);
+        h2D_iTPCPrimaryMultHighQ_Trigger ->Fill(iTPCPrimaryMultHighQ,0);
+      }
+      if(mTrigId[i] == 910003){
+        h2D_iTPCPrimaryMult_Trigger      ->Fill(iTPCPrimaryMult,1);
+        h2D_iTPCPrimaryMultHighQ_Trigger ->Fill(iTPCPrimaryMultHighQ,1);
+      }
+      if(mTrigId[i] == 910013){
+        h2D_iTPCPrimaryMult_Trigger      ->Fill(iTPCPrimaryMult,2);
+        h2D_iTPCPrimaryMultHighQ_Trigger ->Fill(iTPCPrimaryMultHighQ,2);
+      }
+      if(mTrigId[i] == 910802){
+        h2D_iTPCPrimaryMult_Trigger      ->Fill(iTPCPrimaryMult,3);
+        h2D_iTPCPrimaryMultHighQ_Trigger ->Fill(iTPCPrimaryMultHighQ,3);
+      }
+      if(mTrigId[i] == 910804){
+        h2D_iTPCPrimaryMult_Trigger      ->Fill(iTPCPrimaryMult,4);
+        h2D_iTPCPrimaryMultHighQ_Trigger ->Fill(iTPCPrimaryMultHighQ,4);
+      }
+
+
+  }
+
+
 
 
   if(mIdLeadingPart != -1)
