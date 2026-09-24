@@ -694,8 +694,8 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
       for (unsigned short idxPion2 =0 ; idxPion2 < mIdxPicoPions.size();idxPion2 ++){
         StPicoTrack const *BachelorPion = mPicoDst->track(mIdxPicoPions[idxPion2]);
         StHFPair Xi_Triplet(BachelorPion, pair, mHFCuts->getHypotheticalMass(StHFCuts::kPion),pair->m(), mIdxPicoPions[idxPion2], NLambda, mPrimVtx, mBField, true );
-        if(mIdxPicoPions[idxPion2] == pair_copy.particle1Idx()) continue;
-        if(mIdxPicoPions[idxPion2] == pair_copy.particle2Idx()) continue;
+        if(mIdxPicoPions[idxPion2] == pair->particle1Idx()) continue;
+        if(mIdxPicoPions[idxPion2] == pair->particle2Idx()) continue;
 	      if(!mHFCuts->isGoodSecondaryVertexPair_2(Xi_Triplet) ) continue;
 
 	
