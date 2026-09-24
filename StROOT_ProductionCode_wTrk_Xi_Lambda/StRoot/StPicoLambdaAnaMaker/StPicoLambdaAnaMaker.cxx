@@ -555,24 +555,23 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
 
   Int_t iTPCPrimaryMult      = 0;
   Int_t iTPCPrimaryMultHighQ = 0;
-  TVector3 vtxPos          = picoEvent->primaryVertex();
+  TVector3 PvtxPos          = picoEvent->primaryVertex();
   for(Int_t i=0;i< mPicoDst->numberOfTracks();i++){
     StPicoTrack *pTrack = mPicoDst->track(i);
     if(!pTrack) continue;
     if(!pTrack->isPrimary()) continue;
-    if(fabs(eta)>=1.5) continue;
     
     float eta = pTrack->pMom().Eta();
+    if(fabs(eta)>=1.5) continue;
     iTPCPrimaryMult++;
 
     Int_t   nHits         = pTrack->nHitsFit();
     Int_t   nHitsPoss     = pTrack->nHitsMax();
-    Float_t gDca = pTrack->gDCA(vtxPos).Mag();//pMuTrack->dcaGlobal().mag();
+    Float_t gDca = pTrack->gDCA(PvtxPos).Mag();//pMuTrack->dcaGlobal().mag();
     Float_t rhits = 1.0*nHits/nHitsPoss;
 
     //if(nHits>15 && pt>0.1 && gDca<=5.0 && fabs(eta)<1.0 && rhits>0.52){                                         
-    if(nHits<=15 ) continue;
-    if(pt<=2.0) continue;
+    if(nHits<=20 ) continue;
     if(gDca>5.0) continue;
     if(rhits<=0.52) continue;
     iTPCPrimaryMultHighQ++;
