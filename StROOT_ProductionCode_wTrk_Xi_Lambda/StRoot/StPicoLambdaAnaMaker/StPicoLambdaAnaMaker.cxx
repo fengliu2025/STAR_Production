@@ -555,7 +555,7 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
 
   Int_t iTPCPrimaryMult      = 0;
   Int_t iTPCPrimaryMultHighQ = 0;
-
+  TVector3 vtxPos          = picoEvent->primaryVertex();
   for(Int_t i=0;i< mPicoDst->numberOfTracks();i++){
     StPicoTrack *pTrack = mPicoDst->track(i);
     if(!pTrack) continue;
