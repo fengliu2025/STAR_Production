@@ -510,7 +510,7 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
         track_hasTOFinfo[track_Number] = 0 ;
         if(!isnan(track_BetaBase) && track_BetaBase > 0)
         {
-          track_hasTOFinfo[NLambda] = 1;      
+          track_hasTOFinfo[track_Number] = 1;      
         }
 
         track_beta[track_Number] = -999.0;
