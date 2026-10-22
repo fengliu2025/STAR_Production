@@ -526,6 +526,7 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
 
         track_Number++;             
     }
+    ntp_Lambda->Fill(); 
   return kStOK;
 }
 
