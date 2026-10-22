@@ -40,7 +40,7 @@ void runPicoLambdaAnaMaker3(int InputFileIndex){
   const int triggerSetup = 0;
 
   
-  std::ifstream FileListTxt("/gpfs01/star/pwg/fliu/production/pp2024/FileList/RunFileLists/FileList.txt");
+  std::ifstream FileListTxt("/gpfs01/star/pwg/fliu/production/pp2017/FileList/RunFileLists/FileList.txt");
   if(!FileListTxt.is_open()){
     std::cerr<<"can't open the file :FileList.txt"<<std::endl;
   }
@@ -240,7 +240,7 @@ void runPicoLambdaAnaMaker3(int InputFileIndex){
   picoLambdaAnaMaker->setDecayMode(StPicoHFEvent::kTwoParticleDecay); //to setup secondary vertices as StHFPair
 
 
-  hfCuts->setCutEta(1.5);//2024 data  
+  hfCuts->setCutEta(1.0);//2017 data  
   //hfCuts->setCutEta(1.0);//2012 data 
   hfCuts->setCutPtMin(0.15); //global min. pT cut
 
