@@ -514,7 +514,7 @@ int StPicoLambdaAnaMaker::analyzeCandidates() {
         }
 
         track_beta[track_Number] = -999.0;
-        Int_t bTofPidTraitsIndex1          = track->bTofPidTraitsIndex();
+        Int_t bTofPidTraitsIndex1          = trk->bTofPidTraitsIndex();
   
         if(bTofPidTraitsIndex1>=0){
               StPicoBTofPidTraits *btofPidTraits1 = mPicoDst->btofPidTraits(bTofPidTraitsIndex1);
